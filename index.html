@@ -497,7 +497,7 @@
 
     async function fetchCatalog() {
       try {
-        const response = await fetch(SCRIPT_URL);
+        const response = await fetch(SCRIPT_URL + '?action=obtenerProductos');
         allProducts = await response.json();
         renderCatalog(allProducts);
       } catch (error) {
@@ -516,22 +516,26 @@
 
       products.forEach((product, index) => {
         const stock = parseInt(product.stock) || 0;
-        const price = parseFloat(product.precio) || 0;
+        const price = parseFloat(product.precioVenta) || 0;
         const puffs = product.puffs || '';
+        const marca = product.marca || '';
+        const modelo = product.modelo || 'Producto';
+        const imagen = product.imagen || '';
+        const sabor = product.sabor || 'Único';
         const isOutOfStock = stock <= 0;
 
         const card = document.createElement('div');
         card.className = 'product-card';
 
-        const safeNombre = (product.nombre || '').replace(/'/g, "\\'");
-        const safeSabor = (product.sabor || 'Único').replace(/'/g, "\\'");
+        const safeNombre = `${marca} ${modelo}`.trim().replace(/'/g, "\\'");
+        const safeSabor = sabor.replace(/'/g, "\\'");
         const safePuffs = puffs.toString().replace(/'/g, "\\'");
 
         card.innerHTML = `
-          <img class="product-img" src="${product.imagen || 'https://via.placeholder.com/400x260?text=SMOK3+NIC'}" alt="${product.nombre}">
+          <img class="product-img" src="${imagen || 'https://via.placeholder.com/400x260?text=SMOK3+NIC'}" alt="${safeNombre}">
           <div class="product-info">
-            <div class="product-title">${product.nombre}</div>
-            <div class="product-flavor">🍓 Sabor: ${product.sabor || 'Único'} ${puffs ? '| 💨 ' + puffs + ' Puffs' : ''}</div>
+            <div class="product-title">${marca} ${modelo}</div>
+            <div class="product-flavor">🍓 Sabor: ${sabor} ${puffs ? '| 💨 ' + puffs + ' Puffs' : ''}</div>
             
             <div class="price-tag">C$ ${price.toFixed(2)}</div>
 
@@ -700,7 +704,8 @@
     function filterProducts() {
       const query = document.getElementById('searchInput').value.toLowerCase();
       const filtered = allProducts.filter(p => 
-        (p.nombre && p.nombre.toLowerCase().includes(query)) ||
+        (p.modelo && p.modelo.toLowerCase().includes(query)) ||
+        (p.marca && p.marca.toLowerCase().includes(query)) ||
         (p.sabor && p.sabor.toLowerCase().includes(query))
       );
       renderCatalog(filtered);
