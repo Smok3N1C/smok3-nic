@@ -19,7 +19,6 @@
         var currentUrl = window.location.href;
 
         if (isAndroid) {
-          // Forzar apertura en Chrome en Android mediante Intent
           var cleanUrl = currentUrl.replace(/^https?:\/\//, '');
           window.location.href = "intent://" + cleanUrl + "#Intent;scheme=https;package=com.android.chrome;end";
         }
@@ -56,7 +55,6 @@
       min-height: 100vh;
     }
 
-    /* PANCARTA AVISO PARA IN-APP BROWSER (INSTAGRAM / TIKTOK EN IOS) */
     .inapp-banner {
       display: none;
       width: 100%;
@@ -558,6 +556,15 @@
         </div>
       </div>
 
+      <!-- NUEVO: MÉTODO DE PAGO -->
+      <div class="form-group">
+        <label for="paymentMethod">Método de Pago *</label>
+        <select id="paymentMethod">
+          <option value="Efectivo 💵">Efectivo 💵</option>
+          <option value="Transferencia 💳">Transferencia 💳</option>
+        </select>
+      </div>
+
       <button class="btn-submit-order" onclick="submitOrder()">Confirmar y Pedir por WhatsApp 🚀</button>
     </div>
   </div>
@@ -569,7 +576,6 @@
     let allProducts = [];
     let cart = [];
 
-    // MOSTRAR AVISO DE NAVEGADOR INTERNO
     (function checkInAppForNotice() {
       var ua = navigator.userAgent || navigator.vendor || window.opera;
       var isInApp = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1) || (ua.indexOf('TikTok') > -1);
@@ -756,7 +762,6 @@
       }
     }
 
-    // FUNCIÓN PARA OBTENER GPS AUTOMÁTICO
     function getLocationGPS() {
       const locationTextarea = document.getElementById('custLocation');
       if (navigator.geolocation) {
@@ -783,6 +788,7 @@
       const phone = document.getElementById('custPhone').value.trim();
       const deliveryOpt = document.getElementById('deliveryOption').value;
       const location = document.getElementById('custLocation').value.trim();
+      const paymentMethod = document.getElementById('paymentMethod').value;
 
       if (!name || !phone) {
         alert('Por favor, ingresa tu nombre y número de teléfono.');
@@ -803,7 +809,7 @@
         deliveryDetail = 'Delivery\n🏠 *Ubicación / Dirección:* ' + location + '\n💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*';
       }
 
-      const message = '¡Hola SMOK3 NIC! 👋 Quiero hacer un pedido:\n\n' + itemsText + '\n\n💰 *Precio Total:* C\$ ' + totalPrice.toFixed(2) + '\n\n👤 *Datos del cliente:*\n• Nombre: ' + name + '\n• Teléfono: ' + phone + '\n\n📦 *Método de Entrega:* ' + deliveryDetail;
+      const message = '¡Hola SMOK3 NIC! 👋 Quiero hacer un pedido:\n\n' + itemsText + '\n\n💰 *Precio Total:* C\$ ' + totalPrice.toFixed(2) + '\n\n💳 *Método de Pago:* ' + paymentMethod + '\n\n👤 *Datos del cliente:*\n• Nombre: ' + name + '\n• Teléfono: ' + phone + '\n\n📦 *Método de Entrega:* ' + deliveryDetail;
 
       const encodedMsg = encodeURIComponent(message);
       window.open('https://wa.me/' + PHONE_NUMBER + '?text=' + encodedMsg, '_blank');
