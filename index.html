@@ -13,7 +13,6 @@
       --accent-color: #00f2fe;
       --accent-hover: #4facfe;
       --danger-color: #ef4444;
-      --success-color: #22c55e;
       --border-radius: 16px;
     }
 
@@ -490,12 +489,11 @@
   </div>
 
   <script>
-    // Configuración con tus credenciales actualizadas
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZDYvQoK7am_s5dQQcxZ5IZZQZV7YNfGzP-mBOvpjwNnK3C1cO1p_1UrLMZmJxqZgN0Q/exec'; 
-    const PHONE_NUMBER = '50576579359'; // Tu número de WhatsApp (+505 76579359)
+    const PHONE_NUMBER = '50576579359';
 
     let allProducts = [];
-    let cart = []; // Estructura: [{ id, nombre, sabor, puffs, precio, cantidad, maxStock }]
+    let cart = [];
 
     async function fetchCatalog() {
       try {
@@ -503,7 +501,7 @@
         allProducts = await response.json();
         renderCatalog(allProducts);
       } catch (error) {
-        document.getElementById('catalog').innerHTML = `<p style="text-align:center; color:#ef4444;">Error al cargar el catálogo. Intenta de nuevo más tarde.</p>`;
+        document.getElementById('catalog').innerHTML = '<p style="text-align:center; color:#ef4444;">Error al cargar el catálogo. Intenta de nuevo más tarde.</p>';
       }
     }
 
@@ -512,7 +510,7 @@
       catalogContainer.innerHTML = '';
 
       if (!products || products.length === 0) {
-        catalogContainer.innerHTML = `<p style="text-align:center; color:var(--text-secondary);">No hay productos disponibles por el momento.</p>`;
+        catalogContainer.innerHTML = '<p style="text-align:center; color:var(--text-secondary);">No hay productos disponibles por el momento.</p>';
         return;
       }
 
@@ -525,16 +523,20 @@
         const card = document.createElement('div');
         card.className = 'product-card';
 
+        const safeNombre = (product.nombre || '').replace(/'/g, "\\'");
+        const safeSabor = (product.sabor || 'Único').replace(/'/g, "\\'");
+        const safePuffs = puffs.toString().replace(/'/g, "\\'");
+
         card.innerHTML = `
           <img class="product-img" src="${product.imagen || 'https://via.placeholder.com/400x260?text=SMOK3+NIC'}" alt="${product.nombre}">
           <div class="product-info">
             <div class="product-title">${product.nombre}</div>
-            <div class="product-flavor">🍓 Sabor: ${product.sabor || 'Único'} ${puffs ? `| 💨 \${puffs} Puffs` : ''}</div>
+            <div class="product-flavor">🍓 Sabor: ${product.sabor || 'Único'} ${puffs ? '| 💨 ' + puffs + ' Puffs' : ''}</div>
             
-            <div class="price-tag">C$ ${price.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+            <div class="price-tag">C$ ${price.toFixed(2)}</div>
 
             <div class="stock-info ${isOutOfStock ? 'out-of-stock' : ''}">
-              ${isOutOfStock ? '✖ Agotado' : `✔ Stock disponible: \${stock}`}
+              ${isOutOfStock ? '✖ Agotado' : '✔ Stock disponible: ' + stock}
             </div>
 
             <div class="controls-row">
@@ -545,8 +547,8 @@
               </div>
 
               ${isOutOfStock ? 
-                `<button class="btn-add btn-disabled" disabled>Agotado</button>` : 
-                `<button class="btn-add" onclick="addToCart(${index}, '${product.nombre}', '${product.sabor}', '${puffs}', ${price},${stock})">＋ Agregar</button>`
+                '<button class="btn-add btn-disabled" disabled>Agotado</button>' : 
+                `<button class="btn-add" onclick="addToCart(${index}, '${safeNombre}', '${safeSabor}', '${safePuffs}', ${price},${stock})">＋ Agregar</button>`
               }
             </div>
           </div>
@@ -557,7 +559,7 @@
     }
 
     function updateQtyUI(index, delta, maxStock) {
-      const qtySpan = document.getElementById(`qty-${index}`);
+      const qtySpan = document.getElementById('qty-' + index);
       let currentQty = parseInt(qtySpan.innerText) || 1;
       let newQty = currentQty + delta;
 
@@ -567,15 +569,15 @@
     }
 
     function addToCart(index, name, flavor, puffs, price, maxStock) {
-      const qty = parseInt(document.getElementById(`qty-${index}`).innerText) || 1;
-      const itemId = `${name}-${flavor}`;
+      const qty = parseInt(document.getElementById('qty-' + index).innerText) || 1;
+      const itemId = name + '-' + flavor;
 
       const existingIndex = cart.findIndex(item => item.id === itemId);
 
       if (existingIndex > -1) {
         let newTotalQty = cart[existingIndex].cantidad + qty;
         if (newTotalQty > maxStock) {
-          alert(`Lo sentimos, solo hay ${maxStock} unidades disponibles de este sabor.`);
+          alert('Lo sentimos, solo hay ' + maxStock + ' unidades disponibles de este sabor.');
           cart[existingIndex].cantidad = maxStock;
         } else {
           cart[existingIndex].cantidad = newTotalQty;
@@ -604,8 +606,8 @@
       let totalPrice = cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
 
       if (totalItems > 0) {
-        cartCount.innerText = `${totalItems} ítem(s) en tu cesta`;
-        cartTotal.innerText = `Total: C$ ${totalPrice.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        cartCount.innerText = totalItems + ' ítem(s) en tu cesta';
+        cartTotal.innerText = 'Total: C\$ ' + totalPrice.toFixed(2);
         cartBar.classList.remove('hidden');
       } else {
         cartBar.classList.add('hidden');
@@ -638,14 +640,14 @@
         div.innerHTML = `
           <div class="cart-item-details">
             <span class="cart-item-title">${item.nombre}</span>
-            <span class="cart-item-sub">🍓 ${item.sabor || 'N/A'} ${item.puffs ? `| 💨 \${item.puffs}` : ''} | x${item.cantidad} - C$ ${subtotal.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+            <span class="cart-item-sub">🍓 ${item.sabor || 'N/A'} ${item.puffs ? '| 💨 ' + item.puffs : ''} | x${item.cantidad} - C$ ${subtotal.toFixed(2)}</span>
           </div>
           <button class="btn-remove-item" onclick="removeFromCart(${idx})">🗑</button>
         `;
         listContainer.appendChild(div);
       });
 
-      modalTotal.innerText = `C$ ${totalPrice.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      modalTotal.innerText = 'C\$ ' + totalPrice.toFixed(2);
     }
 
     function removeFromCart(index) {
@@ -682,17 +684,17 @@
 
       let totalPrice = cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
 
-      let itemsText = cart.map(i => `🛍️ *Producto:* ${i.nombre}\n🍓 *Sabor:* ${i.sabor || 'N/A'}${i.puffs ? `\n💨 *Puffs:* \${i.puffs}` : ''}\n📦 *Cantidad:* ${i.cantidad}\n💰 *Subtotal:* C$ ${(i.precio * i.cantidad).toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`).join('\n\n');
+      let itemsText = cart.map(i => '🛍️ *Producto:* ' + i.nombre + '\n🍓 *Sabor:* ' + (i.sabor || 'N/A') + (i.puffs ? '\n💨 *Puffs:* ' + i.puffs : '') + '\n📦 *Cantidad:* ' + i.cantidad + '\n💰 *Subtotal:* C\$ ' + (i.precio * i.cantidad).toFixed(2)).join('\n\n');
 
       let deliveryDetail = deliveryOpt;
       if (deliveryOpt === 'Delivery') {
-        deliveryDetail = `Delivery\n🏠 *Dirección/Ubicación:* ${location}\n💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*`;
+        deliveryDetail = 'Delivery\n🏠 *Dirección/Ubicación:* ' + location + '\n💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*';
       }
 
-      const message = `¡Hola SMOK3 NIC! 👋 Quiero hacer un pedido:\n\n${itemsText}\n\n💰 *Precio Total:* C$ ${totalPrice.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}\n\n👤 *Datos del cliente:*\n• Nombre: ${name}\n• Teléfono: ${phone}\n\n📦 *Método de Entrega:* ${deliveryDetail}`;
+      const message = '¡Hola SMOK3 NIC! 👋 Quiero hacer un pedido:\n\n' + itemsText + '\n\n💰 *Precio Total:* C\$ ' + totalPrice.toFixed(2) + '\n\n👤 *Datos del cliente:*\n• Nombre: ' + name + '\n• Teléfono: ' + phone + '\n\n📦 *Método de Entrega:* ' + deliveryDetail;
 
       const encodedMsg = encodeURIComponent(message);
-      window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodedMsg}`, '_blank');
+      window.open('https://wa.me/' + PHONE_NUMBER + '?text=' + encodedMsg, '_blank');
     }
 
     function filterProducts() {
@@ -704,7 +706,6 @@
       renderCatalog(filtered);
     }
 
-    // Inicializar carga
     fetchCatalog();
   </script>
 </body>
