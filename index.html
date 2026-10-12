@@ -1,418 +1,711 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMOK3 NIC - Catálogo Premium</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        :root {
-            --neon-blue: #00e5ff;
-            --dark-background: #0b0f19;
-            --card-background: #111827;
-        }
-        
-        body {
-            background-color: var(--dark-background);
-            color: #f3f4f6;
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMOK3 NIC - Catálogo Oficial</title>
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #161f32;
+      --text-color: #ffffff;
+      --text-secondary: #94a3b8;
+      --accent-color: #00f2fe;
+      --accent-hover: #4facfe;
+      --danger-color: #ef4444;
+      --success-color: #22c55e;
+      --border-radius: 16px;
+    }
 
-        .neon-focus:focus {
-            border-color: var(--neon-blue) !important;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.6) !important;
-        }
-        
-        .btn-neon {
-            background-color: transparent;
-            border: 2px solid var(--neon-blue);
-            color: var(--neon-blue);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-neon:hover {
-            background-color: var(--neon-blue);
-            color: #0b0f19;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
-            font-weight: 600;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    </style>
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px 12px 100px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    header .logo-placeholder {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #0b0f19;
+      font-size: 1.2rem;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+
+    header h1 span {
+      color: var(--accent-color);
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 24px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 25px;
+      border: 1px solid #2a374e;
+      background-color: #111827;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-color);
+    }
+
+    .catalog-grid {
+      width: 100%;
+      max-width: 600px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .product-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      border: 1px solid #233047;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      background-color: #0d1322;
+    }
+
+    .product-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    .product-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .product-flavor {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .price-tag {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-top: 4px;
+    }
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      gap: 12px;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      background: #0d1322;
+      border: 1px solid #2a374e;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .quantity-selector button {
+      background: transparent;
+      border: none;
+      color: var(--text-color);
+      width: 36px;
+      height: 36px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .quantity-selector button:hover {
+      background: #1a263e;
+    }
+
+    .quantity-selector span {
+      width: 32px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .btn-add {
+      flex: 1;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+      color: #0b0f19;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: opacity 0.2s;
+    }
+
+    .btn-add:hover {
+      opacity: 0.9;
+    }
+
+    .btn-disabled {
+      background: #334155 !important;
+      color: #94a3b8 !important;
+      cursor: not-allowed;
+    }
+
+    .stock-info {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .out-of-stock {
+      color: var(--danger-color);
+      font-weight: bold;
+    }
+
+    /* BARRA FLOTANTE DE LA CESTA */
+    .cart-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 580px;
+      background: #1e293b;
+      border: 1px solid var(--accent-color);
+      border-radius: 20px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .cart-bar.hidden {
+      display: none;
+    }
+
+    .cart-summary {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-summary-items {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .cart-summary-total {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+
+    .btn-open-cart {
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+      color: #0b0f19;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    /* MODAL DE LA CESTA Y FORMULARIO */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: #111827;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      padding: 24px;
+      overflow-y: auto;
+      border: 1px solid #1f293d;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1f293d;
+      padding-bottom: 12px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.3rem;
+      color: var(--accent-color);
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #161f32;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .cart-item-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .cart-item-sub {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .btn-remove-item {
+      background: transparent;
+      border: none;
+      color: var(--danger-color);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #2a374e;
+      background: #0d1322;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--accent-color);
+    }
+
+    .delivery-note {
+      font-size: 0.82rem;
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      border-left: 3px solid #f59e0b;
+      margin-top: 4px;
+    }
+
+    .btn-submit-order {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+      color: #0b0f19;
+      font-weight: bold;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+  </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Encabezado con Logo SMOK3 NIC -->
-    <header class="bg-[#0b0f19]/90 backdrop-blur-md sticky top-0 z-40 border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center p-1" style="background: radial-gradient(circle, rgba(0,229,255,1) 0%, rgba(11,15,25,1) 100%);">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v9zM19 14l-6.75-6.75a2 2 0 00-2.83 0L5 14M12 11h.01M16 11h.01M20 11h.01"></path></svg>
-                </div>
-                <h1 class="text-2xl font-bold tracking-tight text-white">SMOK<span style="color:var(--neon-blue)">3</span> <span class="font-normal text-gray-300">NIC</span></h1>
-            </div>
-            <div class="text-xs text-gray-400 bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-full">
-                🔥 Catálogo Oficial
-            </div>
-        </div>
-    </header>
+  <header>
+    <div class="logo-placeholder">S</div>
+    <h1>SMOK<span>3</span> NIC</h1>
+  </header>
 
-    <!-- Buscador -->
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <div class="relative max-w-2xl mx-auto">
-            <input type="text" id="buscador" placeholder="Busca por marca, modelo o sabor (ej: Cherry Kiss)..." 
-                   class="w-full bg-[#111827] border border-gray-800 rounded-full px-6 py-4 text-white text-base placeholder-gray-500 neon-focus focus:ring-0 focus:border-gray-700 transition duration-300 shadow-xl">
-            <svg class="absolute right-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        </div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Busca por marca, modelo o sabor..." oninput="filterProducts()">
+  </div>
+
+  <div id="catalog" class="catalog-grid">
+    <div class="loading-spinner">Cargando catálogo...</div>
+  </div>
+
+  <!-- BARRA FLOTANTE DE LA CESTA -->
+  <div id="cartBar" class="cart-bar hidden">
+    <div class="cart-summary">
+      <span id="cartCount" class="cart-summary-items">0 ítems</span>
+      <span id="cartTotal" class="cart-summary-total">Total: C\$ 0.00</span>
     </div>
+    <button class="btn-open-cart" onclick="openModal()">Ver Cesta 🛒</button>
+  </div>
 
-    <!-- Contenedor de Productos -->
-    <main class="max-w-7xl mx-auto px-4 pb-16">
-        <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <p class="col-span-full text-center text-gray-400 py-12">Cargando catálogo...</p>
-        </div>
-    </main>
+  <!-- MODAL CHECKOUT -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🛒 Tu Cesta de Compras</h2>
+        <button class="btn-close-modal" onclick="closeModal()">✕</button>
+      </div>
 
-    <!-- MODAL DETALLES DEL PRODUCTO -->
-    <div id="modal-detalles" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-[#111827] border border-gray-800 rounded-3xl max-w-md w-full p-6 relative shadow-2xl">
-            <button onclick="cerrarModal('modal-detalles')" class="absolute top-4 right-4 text-gray-400 hover:text-white bg-gray-800/60 p-2 rounded-full">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <div id="contenido-modal" class="mt-2"></div>
+      <div id="cartItemsList" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Lista de productos añadidos -->
+      </div>
+
+      <div style="text-align: right; font-size: 1.1rem; font-weight: bold; color: var(--accent-color);">
+        Total a pagar: <span id="modalTotal">C\$ 0.00</span>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid #1f293d; margin: 4px 0;">
+
+      <h3 style="font-size: 1.05rem; color: #fff;">📋 Datos para el Pedido</h3>
+
+      <div class="form-group">
+        <label for="custName">Nombre Completo *</label>
+        <input type="text" id="custName" placeholder="Escribe tu nombre">
+      </div>
+
+      <div class="form-group">
+        <label for="custPhone">Número de Teléfono / WhatsApp *</label>
+        <input type="tel" id="custPhone" placeholder="Ej: 88888888">
+      </div>
+
+      <div class="form-group">
+        <label for="deliveryOption">Opción de Entrega *</label>
+        <select id="deliveryOption" onchange="toggleDeliveryFields()">
+          <option value="Plaza El Edén">Punto de Entrega: Plaza El Edén (Gratis)</option>
+          <option value="Puente El Paraisito">Punto de Entrega: Puente El Paraisito (Gratis)</option>
+          <option value="Delivery">Envío por Delivery a Domicilio</option>
+        </select>
+      </div>
+
+      <!-- CAMPO UBICACIÓN DELIVERY -->
+      <div id="deliveryFields" class="form-group" style="display: none;">
+        <label for="custLocation">Ubicación / Dirección Exacta *</label>
+        <textarea id="custLocation" rows="2" placeholder="Pega el link de tu ubicación de Google Maps o tu dirección exacta..."></textarea>
+        <div class="delivery-note">
+          💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*
         </div>
+      </div>
+
+      <button class="btn-submit-order" onclick="submitOrder()">Confirmar y Pedir por WhatsApp 🚀</button>
     </div>
+  </div>
 
-    <!-- MODAL DE COMPRA / FORMULARIO -->
-    <div id="modal-compra" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-[#111827] border border-gray-800 rounded-3xl max-w-md w-full p-6 relative shadow-2xl my-8">
-            <button onclick="cerrarModal('modal-compra')" class="absolute top-4 right-4 text-gray-400 hover:text-white bg-gray-800/60 p-2 rounded-full">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+  <script>
+    // Configuración con tus credenciales actualizadas
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZDYvQoK7am_s5dQQcxZ5IZZQZV7YNfGzP-mBOvpjwNnK3C1cO1p_1UrLMZmJxqZgN0Q/exec'; 
+    const PHONE_NUMBER = '50576579359'; // Tu número de WhatsApp (+505 76579359)
+
+    let allProducts = [];
+    let cart = []; // Estructura: [{ id, nombre, sabor, puffs, precio, cantidad, maxStock }]
+
+    async function fetchCatalog() {
+      try {
+        const response = await fetch(SCRIPT_URL);
+        allProducts = await response.json();
+        renderCatalog(allProducts);
+      } catch (error) {
+        document.getElementById('catalog').innerHTML = `<p style="text-align:center; color:#ef4444;">Error al cargar el catálogo. Intenta de nuevo más tarde.</p>`;
+      }
+    }
+
+    function renderCatalog(products) {
+      const catalogContainer = document.getElementById('catalog');
+      catalogContainer.innerHTML = '';
+
+      if (!products || products.length === 0) {
+        catalogContainer.innerHTML = `<p style="text-align:center; color:var(--text-secondary);">No hay productos disponibles por el momento.</p>`;
+        return;
+      }
+
+      products.forEach((product, index) => {
+        const stock = parseInt(product.stock) || 0;
+        const price = parseFloat(product.precio) || 0;
+        const puffs = product.puffs || '';
+        const isOutOfStock = stock <= 0;
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        card.innerHTML = `
+          <img class="product-img" src="${product.imagen || 'https://via.placeholder.com/400x260?text=SMOK3+NIC'}" alt="${product.nombre}">
+          <div class="product-info">
+            <div class="product-title">${product.nombre}</div>
+            <div class="product-flavor">🍓 Sabor: ${product.sabor || 'Único'} ${puffs ? `| 💨 \${puffs} Puffs` : ''}</div>
             
-            <div id="paso-formulario">
-                <h3 class="text-xl font-bold text-white mb-2">Finalizar Pedido</h3>
-                <p class="text-sm text-gray-400 mb-4" id="info-producto-pedido"></p>
-                
-                <form id="form-pedido" onsubmit="mostrarResumen(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Nombre Completo</label>
-                        <input type="text" id="nombre-cliente" required placeholder="Ej. Juan Pérez" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl px-4 py-3 text-white neon-focus focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Número de Teléfono</label>
-                        <input type="tel" id="telefono-cliente" required placeholder="Ej. 8888-8888" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl px-4 py-3 text-white neon-focus focus:outline-none">
-                    </div>
+            <div class="price-tag">C$ ${price.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
 
-                    <!-- METODO DE ENTREGA -->
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Método de Entrega</label>
-                        <select id="tipo-entrega" onchange="cambiarMetodoEntrega()" required class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl px-4 py-3 text-white neon-focus focus:outline-none">
-                            <option value="" disabled selected>Selecciona una opción...</option>
-                            <option value="punto">Punto de Entrega</option>
-                            <option value="delivery">Delivery</option>
-                        </select>
-                    </div>
-
-                    <div id="seccion-punto-entrega" class="hidden">
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Selecciona el Punto</label>
-                        <select id="punto-seleccionado" class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl px-4 py-3 text-white neon-focus focus:outline-none">
-                            <option value="Plaza El Edén">Plaza El Edén</option>
-                            <option value="Puente El Paraisito">Puente El Paraisito</option>
-                        </select>
-                    </div>
-
-                    <div id="seccion-delivery" class="hidden space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Dirección de Entrega</label>
-                            <textarea id="direccion-cliente" rows="2" placeholder="Barrio, detalles de la casa, referencias..." class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl px-4 py-3 text-white neon-focus focus:outline-none resize-none"></textarea>
-                        </div>
-                        
-                        <!-- Botón para compartir ubicación GPS -->
-                        <div>
-                            <button type="button" onclick="obtenerUbicacionGPS()" id="btn-gps" class="w-full bg-gray-800 hover:bg-gray-700 text-cyan-400 border border-cyan-900/50 font-semibold py-2.5 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <span id="texto-gps">📍 Compartir mi ubicación actual (GPS)</span>
-                            </button>
-                            <input type="hidden" id="link-mapa" value="">
-                        </div>
-
-                        <p class="text-xs text-cyan-400 bg-cyan-950/40 p-3 rounded-xl border border-cyan-900/50">
-                            ℹ️ Nos contactaremos en breve para brindarte más información acerca de tu envío.
-                        </p>
-                    </div>
-
-                    <button type="submit" class="w-full bg-[#00e5ff] hover:bg-[#00b8cc] text-[#0b0f19] font-bold py-3.5 px-4 rounded-xl transition duration-300 mt-4">
-                        Revisar Resumen del Pedido
-                    </button>
-                </form>
+            <div class="stock-info ${isOutOfStock ? 'out-of-stock' : ''}">
+              ${isOutOfStock ? '✖ Agotado' : `✔ Stock disponible: \${stock}`}
             </div>
 
-            <!-- PASO RESUMEN Y CONFIRMACIÓN -->
-            <div id="paso-resumen" class="hidden">
-                <h3 class="text-xl font-bold text-white mb-2">Resumen de tu Pedido</h3>
-                <p class="text-xs text-gray-400 mb-4">Por favor, revisa tus datos antes de confirmar:</p>
-                
-                <div id="contenido-resumen" class="bg-[#0b0f19] border border-gray-800 rounded-2xl p-4 text-sm space-y-3 mb-5"></div>
+            <div class="controls-row">
+              <div class="quantity-selector">
+                <button onclick="updateQtyUI(${index}, -1, ${stock})" ${isOutOfStock ? 'disabled' : ''}>-</button>
+                <span id="qty-${index}">${isOutOfStock ? 0 : 1}</span>
+                <button onclick="updateQtyUI(${index}, 1, ${stock})" ${isOutOfStock ? 'disabled' : ''}>+</button>
+              </div>
 
-                <div class="flex gap-3">
-                    <button onclick="volverAFormulario()" class="w-1/3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold py-3 rounded-xl text-sm">
-                        Modificar
-                    </button>
-                    <button onclick="confirmarYEnviarWhatsApp()" id="btn-enviar-pedido" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/40 text-sm">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.124-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                        Confirmar Pedido
-                    </button>
-                </div>
+              ${isOutOfStock ? 
+                `<button class="btn-add btn-disabled" disabled>Agotado</button>` : 
+                `<button class="btn-add" onclick="addToCart(${index}, '${product.nombre}', '${product.sabor}', '${puffs}', ${price},${stock})">＋ Agregar</button>`
+              }
             </div>
-        </div>
-    </div>
+          </div>
+        `;
 
-    <!-- Footer -->
-    <footer class="text-center py-8 text-gray-500 border-t border-gray-800 text-sm">
-        <p>&copy; 2026 SMOK3 NIC. Todos los derechos reservados.</p>
-    </footer>
+        catalogContainer.appendChild(card);
+      });
+    }
 
-    <script>
-        // URL de tu API de Google Apps Script ya configurada
-        const API_URL = "https://script.google.com/macros/s/AKfycbxZDYvQoK7am_s5dQQcxZ5IZZQZV7YNfGzP-mBOvpjwNnK3C1cO1p_1UrLMZmJxqZgN0Q/exec";
+    function updateQtyUI(index, delta, maxStock) {
+      const qtySpan = document.getElementById(`qty-${index}`);
+      let currentQty = parseInt(qtySpan.innerText) || 1;
+      let newQty = currentQty + delta;
 
-        let productosTotales = [];
-        let productoSeleccionadoActual = null;
-        let datosPedidoTemp = null;
+      if (newQty >= 1 && newQty <= maxStock) {
+        qtySpan.innerText = newQty;
+      }
+    }
 
-        async function cargarDatos() {
-            try {
-                const response = await fetch(`${API_URL}?action=obtenerProductos`);
-                productosTotales = await response.json();
-                renderizarProductos(productosTotales);
-            } catch (error) {
-                console.error('Error al cargar datos:', error);
-                document.getElementById('contenedor-productos').innerHTML = '<p class="col-span-full text-center text-red-400 py-12">Error al cargar productos. Por favor recarga la página.</p>';
-            }
+    function addToCart(index, name, flavor, puffs, price, maxStock) {
+      const qty = parseInt(document.getElementById(`qty-${index}`).innerText) || 1;
+      const itemId = `${name}-${flavor}`;
+
+      const existingIndex = cart.findIndex(item => item.id === itemId);
+
+      if (existingIndex > -1) {
+        let newTotalQty = cart[existingIndex].cantidad + qty;
+        if (newTotalQty > maxStock) {
+          alert(`Lo sentimos, solo hay ${maxStock} unidades disponibles de este sabor.`);
+          cart[existingIndex].cantidad = maxStock;
+        } else {
+          cart[existingIndex].cantidad = newTotalQty;
         }
-
-        function renderizarProductos(productos) {
-            const contenedor = document.getElementById('contenedor-productos');
-            contenedor.innerHTML = '';
-
-            if (productos.length === 0) {
-                contenedor.innerHTML = '<p class="col-span-full text-center text-gray-500 py-12">No se encontraron productos disponibles.</p>';
-                return;
-            }
-
-            productos.forEach((p) => {
-                const card = `
-                    <div class="bg-[#111827] border border-gray-800 rounded-3xl p-5 shadow-xl flex flex-col transition duration-300 hover:border-gray-700 hover:shadow-2xl">
-                        <div class="w-full h-44 flex items-center justify-center overflow-hidden rounded-2xl mb-4 bg-gray-900">
-                            ${p.imagen ? `<img src="${p.imagen}" alt="${p.modelo}" class="w-full h-full object-cover">` : '<svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>'}
-                        </div>
-                        <div class="flex-grow">
-                            <span class="text-[10px] font-bold text-[#00e5ff] uppercase tracking-widest bg-cyan-950/40 px-2.5 py-1 rounded-md border border-cyan-900/55">${p.marca}</span>
-                            <h3 class="text-xl font-bold text-white mt-2 mb-1">${p.modelo}</h3>
-                            <p class="text-sm text-gray-300 font-medium mb-3 line-clamp-1">${p.sabor}</p>
-                            <p class="text-3xl font-extrabold text-white mb-2">$${Number(p.precioVenta).toFixed(2)}</p>
-                        </div>
-                        <div class="mt-4 flex gap-2">
-                            <button onclick='abrirDetalles(${JSON.stringify(p)})' class="flex-grow btn-neon font-bold py-2.5 px-3 rounded-xl text-center text-sm">Ver detalles</button>
-                            <button onclick='abrirCompra(${JSON.stringify(p)})' class="bg-[#00e5ff] hover:bg-[#00b8cc] text-[#0b0f19] font-bold p-2.5 rounded-xl transition duration-300 flex items-center justify-center shadow-lg shadow-cyan-500/20" title="Comprar">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                contenedor.innerHTML += card;
-            });
-        }
-
-        function abrirDetalles(p) {
-            const contenido = document.getElementById('contenido-modal');
-            const stockTexto = Number(p.stock) > 0 ? `${p.stock} unidades` : 'Agotado';
-            contenido.innerHTML = `
-                <div class="w-full h-56 flex items-center justify-center overflow-hidden rounded-2xl mb-4 bg-gray-900">
-                    ${p.imagen ? `<img src="${p.imagen}" alt="${p.modelo}" class="w-full h-full object-cover">` : '<svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>'}
-                </div>
-                <span class="text-xs font-bold text-[#00e5ff] uppercase tracking-widest">${p.marca}</span>
-                <h2 class="text-2xl font-bold text-white mt-1 mb-3">${p.modelo}</h2>
-                
-                <div class="bg-[#0b0f19] border border-gray-800 rounded-2xl p-4 space-y-2 mb-5">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-400">Sabor:</span>
-                        <span class="text-white font-semibold text-right">${p.sabor}</span>
-                    </div>
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-400">Puffs (Caladas):</span>
-                        <span class="text-white font-semibold">${p.puffs} Puffs</span>
-                    </div>
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-400">Disponibilidad:</span>
-                        <span class="text-white font-semibold">${stockTexto}</span>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-between">
-                    <div>
-                        <span class="text-xs text-gray-400 block">Precio</span>
-                        <span class="text-3xl font-extrabold text-white">$${Number(p.precioVenta).toFixed(2)}</span>
-                    </div>
-                    <button onclick='cerrarModal("modal-detalles"); abrirCompra(${JSON.stringify(p)});' class="btn-neon font-bold py-3 px-6 rounded-xl text-sm">
-                        Comprar Ahora
-                    </button>
-                </div>
-            `;
-            document.getElementById('modal-detalles').classList.remove('hidden');
-        }
-
-        function abrirCompra(p) {
-            productoSeleccionadoActual = p;
-            document.getElementById('info-producto-pedido').innerText = `Estás solicitando: ${p.marca} ${p.modelo} (${p.sabor}) - $${Number(p.precioVenta).toFixed(2)}`;
-            document.getElementById('form-pedido').reset();
-            document.getElementById('link-mapa').value = '';
-            document.getElementById('texto-gps').innerText = '📍 Compartir mi ubicación actual (GPS)';
-            document.getElementById('seccion-punto-entrega').classList.add('hidden');
-            document.getElementById('seccion-delivery').classList.add('hidden');
-            document.getElementById('paso-formulario').classList.remove('hidden');
-            document.getElementById('paso-resumen').classList.add('hidden');
-            document.getElementById('modal-compra').classList.remove('hidden');
-        }
-
-        function cambiarMetodoEntrega() {
-            const metodo = document.getElementById('tipo-entrega').value;
-            const seccionPunto = document.getElementById('seccion-punto-entrega');
-            const seccionDelivery = document.getElementById('seccion-delivery');
-            const inputDireccion = document.getElementById('direccion-cliente');
-            const selectPunto = document.getElementById('punto-seleccionado');
-
-            if (metodo === 'punto') {
-                seccionPunto.classList.remove('hidden');
-                seccionDelivery.classList.add('hidden');
-                selectPunto.required = true;
-                inputDireccion.required = false;
-            } else if (metodo === 'delivery') {
-                seccionDelivery.classList.remove('hidden');
-                seccionPunto.classList.add('hidden');
-                inputDireccion.required = true;
-                selectPunto.required = false;
-            }
-        }
-
-        function obtenerUbicacionGPS() {
-            const textoGps = document.getElementById('texto-gps');
-            if (!navigator.geolocation) {
-                alert('Tu navegador no soporta geolocalización.');
-                return;
-            }
-
-            textoGps.innerText = 'Obteniendo ubicación...';
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    const urlMaps = `https://maps.google.com/?q=${lat},${lon}`;
-                    document.getElementById('link-mapa').value = urlMaps;
-                    textoGps.innerText = '✅ ¡Ubicación guardada con éxito!';
-                },
-                (error) => {
-                    alert('No se pudo obtener la ubicación. Asegúrate de dar permisos de GPS.');
-                    textoGps.innerText = '📍 Compartir mi ubicación actual (GPS)';
-                },
-                { timeout: 10000, enableHighAccuracy: true }
-            );
-        }
-
-        function mostrarResumen(e) {
-            e.preventDefault();
-            const tipoEntrega = document.getElementById('tipo-entrega').value;
-            
-            datosPedidoTemp = {
-                marca: productoSeleccionadoActual.marca,
-                modelo: productoSeleccionadoActual.modelo,
-                sabor: productoSeleccionadoActual.sabor,
-                puffs: productoSeleccionadoActual.puffs,
-                precioVenta: productoSeleccionadoActual.precioVenta,
-                nombre: document.getElementById('nombre-cliente').value.trim(),
-                telefono: document.getElementById('telefono-cliente').value.trim(),
-                tipoEntrega: tipoEntrega,
-                puntoEntrega: tipoEntrega === 'punto' ? document.getElementById('punto-seleccionado').value : '',
-                direccion: tipoEntrega === 'delivery' ? document.getElementById('direccion-cliente').value.trim() : '',
-                mapaUrl: tipoEntrega === 'delivery' ? document.getElementById('link-mapa').value : ''
-            };
-
-            const htmlResumen = `
-                <div class="border-b border-gray-800 pb-2">
-                    <p class="text-xs text-gray-400">Producto:</p>
-                    <p class="text-white font-semibold">${datosPedidoTemp.marca} ${datosPedidoTemp.modelo} (${datosPedidoTemp.sabor})</p>
-                    <p class="text-[#00e5ff] font-bold text-base mt-1">$${Number(datosPedidoTemp.precioVenta).toFixed(2)}</p>
-                </div>
-                <div class="border-b border-gray-800 pb-2">
-                    <p class="text-xs text-gray-400">Cliente:</p>
-                    <p class="text-white">${datosPedidoTemp.nombre} (${datosPedidoTemp.telefono})</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-400">Entrega:</p>
-                    <p class="text-white font-medium">${datosPedidoTemp.tipoEntrega === 'delivery' ? '📦 Delivery a: ' + datosPedidoTemp.direccion : '📍 Punto: ' + datosPedidoTemp.puntoEntrega}</p>
-                    ${datosPedidoTemp.mapaUrl ? '<p class="text-xs text-emerald-400 mt-1">✅ Ubicación GPS adjuntada</p>' : ''}
-                    ${datosPedidoTemp.tipoEntrega === 'delivery' ? '<p class="text-xs text-cyan-400 mt-1">*(Nos contactaremos en breve para brindarte más información acerca de su envío)*</p>' : ''}
-                </div>
-            `;
-
-            document.getElementById('contenido-resumen').innerHTML = htmlResumen;
-            document.getElementById('paso-formulario').classList.add('hidden');
-            document.getElementById('paso-resumen').classList.remove('hidden');
-        }
-
-        function volverAFormulario() {
-            document.getElementById('paso-resumen').classList.add('hidden');
-            document.getElementById('paso-formulario').classList.remove('hidden');
-        }
-
-        function confirmarYEnviarWhatsApp() {
-            const btn = document.getElementById('btn-enviar-pedido');
-            btn.innerText = "Procesando...";
-            btn.disabled = true;
-
-            let detalleEntrega = "";
-            if (datosPedidoTemp.tipoEntrega === "delivery") {
-                let infoUbicacion = datosPedidoTemp.mapaUrl ? `\n📍 *Ubicación GPS:* ${datosPedidoTemp.mapaUrl}` : "";
-                detalleEntrega = `📦 *Método de Entrega:* Delivery\n🏠 *Dirección:* ${datosPedidoTemp.direccion}${infoUbicacion}\n💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*`;
-            } else {
-                detalleEntrega = `📍 *Método de Entrega:* Punto de Entrega\n🏢 *Lugar:* ${datosPedidoTemp.puntoEntrega}`;
-            }
-
-            const mensaje = `¡Hola SMOK3 NIC! 👋 Quiero hacer un pedido:\n\n` +
-                            `🛍️ *Producto:* ${datosPedidoTemp.marca} - ${datosPedidoTemp.modelo}\n` +
-                            `🍓 *Sabor:* ${datosPedidoTemp.sabor}\n` +
-                            `💨 *Puffs:* ${datosPedidoTemp.puffs}\n` +
-                            `💰 *Precio:* $${Number(datosPedidoTemp.precioVenta).toFixed(2)}\n\n` +
-                            `👤 *Datos del cliente:*\n` +
-                            `• Nombre: ${datosPedidoTemp.nombre}\n` +
-                            `• Teléfono: ${datosPedidoTemp.telefono}\n\n` +
-                            detalleEntrega;
-
-            const urlWhatsApp = `https://api.whatsapp.com/send?phone=50576579359&text=${encodeURIComponent(mensaje)}`;
-            window.open(urlWhatsApp, '_blank');
-            cerrarModal('modal-compra');
-            document.getElementById('form-pedido').reset();
-            btn.innerText = "Confirmar Pedido";
-            btn.disabled = false;
-        }
-
-        function cerrarModal(idModal) {
-            document.getElementById(idModal).classList.add('hidden');
-        }
-
-        document.getElementById('buscador').addEventListener('input', (e) => {
-            const busqueda = e.target.value.toLowerCase().trim();
-            const productosFiltrados = productosTotales.filter(p => {
-                return p.marca.toLowerCase().includes(busqueda) ||
-                       p.modelo.toLowerCase().includes(busqueda) ||
-                       p.sabor.toLowerCase().includes(busqueda);
-            });
-            renderizarProductos(productosFiltrados);
+      } else {
+        cart.push({
+          id: itemId,
+          nombre: name,
+          sabor: flavor,
+          puffs: puffs,
+          precio: price,
+          cantidad: qty,
+          maxStock: maxStock
         });
+      }
 
-        window.addEventListener('load', cargarDatos);
-    </script>
+      updateCartBar();
+    }
+
+    function updateCartBar() {
+      const cartBar = document.getElementById('cartBar');
+      const cartCount = document.getElementById('cartCount');
+      const cartTotal = document.getElementById('cartTotal');
+
+      let totalItems = cart.reduce((sum, item) => sum + item.cantidad, 0);
+      let totalPrice = cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+
+      if (totalItems > 0) {
+        cartCount.innerText = `${totalItems} ítem(s) en tu cesta`;
+        cartTotal.innerText = `Total: C$ ${totalPrice.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        cartBar.classList.remove('hidden');
+      } else {
+        cartBar.classList.add('hidden');
+        closeModal();
+      }
+    }
+
+    function openModal() {
+      renderCartModal();
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    function renderCartModal() {
+      const listContainer = document.getElementById('cartItemsList');
+      const modalTotal = document.getElementById('modalTotal');
+      listContainer.innerHTML = '';
+
+      let totalPrice = 0;
+
+      cart.forEach((item, idx) => {
+        let subtotal = item.precio * item.cantidad;
+        totalPrice += subtotal;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div class="cart-item-details">
+            <span class="cart-item-title">${item.nombre}</span>
+            <span class="cart-item-sub">🍓 ${item.sabor || 'N/A'} ${item.puffs ? `| 💨 \${item.puffs}` : ''} | x${item.cantidad} - C$ ${subtotal.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+          </div>
+          <button class="btn-remove-item" onclick="removeFromCart(${idx})">🗑</button>
+        `;
+        listContainer.appendChild(div);
+      });
+
+      modalTotal.innerText = `C$ ${totalPrice.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartBar();
+      renderCartModal();
+    }
+
+    function toggleDeliveryFields() {
+      const option = document.getElementById('deliveryOption').value;
+      const deliveryFields = document.getElementById('deliveryFields');
+      if (option === 'Delivery') {
+        deliveryFields.style.display = 'flex';
+      } else {
+        deliveryFields.style.display = 'none';
+      }
+    }
+
+    function submitOrder() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const deliveryOpt = document.getElementById('deliveryOption').value;
+      const location = document.getElementById('custLocation').value.trim();
+
+      if (!name || !phone) {
+        alert('Por favor, ingresa tu nombre y número de teléfono.');
+        return;
+      }
+
+      if (deliveryOpt === 'Delivery' && !location) {
+        alert('Por favor, ingresa tu dirección o link de ubicación para el delivery.');
+        return;
+      }
+
+      let totalPrice = cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+
+      let itemsText = cart.map(i => `🛍️ *Producto:* ${i.nombre}\n🍓 *Sabor:* ${i.sabor || 'N/A'}${i.puffs ? `\n💨 *Puffs:* \${i.puffs}` : ''}\n📦 *Cantidad:* ${i.cantidad}\n💰 *Subtotal:* C$ ${(i.precio * i.cantidad).toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`).join('\n\n');
+
+      let deliveryDetail = deliveryOpt;
+      if (deliveryOpt === 'Delivery') {
+        deliveryDetail = `Delivery\n🏠 *Dirección/Ubicación:* ${location}\n💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*`;
+      }
+
+      const message = `¡Hola SMOK3 NIC! 👋 Quiero hacer un pedido:\n\n${itemsText}\n\n💰 *Precio Total:* C$ ${totalPrice.toLocaleString('es-NI', {minimumFractionDigits: 2, maximumFractionDigits: 2})}\n\n👤 *Datos del cliente:*\n• Nombre: ${name}\n• Teléfono: ${phone}\n\n📦 *Método de Entrega:* ${deliveryDetail}`;
+
+      const encodedMsg = encodeURIComponent(message);
+      window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodedMsg}`, '_blank');
+    }
+
+    function filterProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allProducts.filter(p => 
+        (p.nombre && p.nombre.toLowerCase().includes(query)) ||
+        (p.sabor && p.sabor.toLowerCase().includes(query))
+      );
+      renderCatalog(filtered);
+    }
+
+    // Inicializar carga
+    fetchCatalog();
+  </script>
 </body>
 </html>
