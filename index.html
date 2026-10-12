@@ -380,6 +380,26 @@
       border-color: var(--accent-color);
     }
 
+    .btn-gps {
+      background: #1e293b;
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .btn-gps:hover {
+      background: #2a374e;
+    }
+
     .delivery-note {
       font-size: 0.82rem;
       color: #f59e0b;
@@ -475,10 +495,16 @@
         </select>
       </div>
 
-      <!-- CAMPO UBICACIÓN DELIVERY -->
+      <!-- CAMPO UBICACIÓN DELIVERY Y BOTÓN GPS -->
       <div id="deliveryFields" class="form-group" style="display: none;">
         <label for="custLocation">Ubicación / Dirección Exacta *</label>
-        <textarea id="custLocation" rows="2" placeholder="Pega el link de tu ubicación de Google Maps o tu dirección exacta..."></textarea>
+        
+        <button type="button" class="btn-gps" onclick="getLocationGPS()">
+          📍 Obtener mi ubicación GPS automáticamente
+        </button>
+
+        <textarea id="custLocation" rows="2" placeholder="Presiona el botón de arriba o escribe tu dirección/referencias a mano..."></textarea>
+        
         <div class="delivery-note">
           💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*
         </div>
@@ -670,6 +696,28 @@
       }
     }
 
+    // FUNCIÓN PARA OBTENER GPS AUTOMÁTICO
+    function getLocationGPS() {
+      const locationTextarea = document.getElementById('custLocation');
+      if (navigator.geolocation) {
+        locationTextarea.value = "Obteniendo ubicación GPS...";
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+            locationTextarea.value = mapsUrl;
+          },
+          (error) => {
+            alert("No se pudo obtener la ubicación automáticamente. Por favor escribe tu dirección o referencias a mano.");
+            locationTextarea.value = "";
+          }
+        );
+      } else {
+        alert("Tu navegador no soporta la geolocalización GPS.");
+      }
+    }
+
     function submitOrder() {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -682,7 +730,7 @@
       }
 
       if (deliveryOpt === 'Delivery' && !location) {
-        alert('Por favor, ingresa tu dirección o link de ubicación para el delivery.');
+        alert('Por favor, presiona el botón para obtener tu ubicación GPS o escribe tu dirección.');
         return;
       }
 
@@ -692,7 +740,7 @@
 
       let deliveryDetail = deliveryOpt;
       if (deliveryOpt === 'Delivery') {
-        deliveryDetail = 'Delivery\n🏠 *Dirección/Ubicación:* ' + location + '\n💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*';
+        deliveryDetail = 'Delivery\n🏠 *Ubicación / Dirección:* ' + location + '\n💬 *(Nota: Nos contactaremos en breve para brindarle más información acerca de su envío)*';
       }
 
       const message = '¡Hola SMOK3 NIC! 👋 Quiero hacer un pedido:\n\n' + itemsText + '\n\n💰 *Precio Total:* C\$ ' + totalPrice.toFixed(2) + '\n\n👤 *Datos del cliente:*\n• Nombre: ' + name + '\n• Teléfono: ' + phone + '\n\n📦 *Método de Entrega:* ' + deliveryDetail;
